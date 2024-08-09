@@ -3,6 +3,7 @@ Bot was created to analyze where time goes.
 
 ## Available features:
 - Set time marks of starting an activity
+- Set a bot password
 
 ## Todo
 - Several users support
@@ -17,8 +18,10 @@ Bot was created to analyze where time goes.
 - Move database from json to MongoDB or MySQL
 
 ## How to run
-1. Create `.env` file and write this the bot token:
+1. Create `.env` file and write there the bot token and a password:
 ```
 BOT_TOKEN={your_bot_token}
+BOT_PASSWORD={your_password}
 ```
-2. Run `npm run start`
+1. Run `npm run start`
+2. Open your bot, write /start and write your password
