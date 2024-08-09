@@ -1,5 +1,6 @@
 import { Telegraf } from "telegraf";
 import DB from "./db.js";
+import { message } from "telegraf/filters";
 
 const { BOT_TOKEN } = process.env;
 
@@ -16,6 +17,9 @@ bot.command('new', async ctx => {
     ctx.reply('Excellent! New activity mark has been created!');
 });
 
+bot.on(message('text'), ctx => {
+    ctx.reply('You can create activity mark using /new {activity name}');
+});
 
 await db.start('marks');
 bot.launch();

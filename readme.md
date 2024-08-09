@@ -19,6 +19,6 @@ Bot was created to analyze where time goes.
 ## How to run
 1. Create `.env` file and write this the bot token:
 ```
-BOT_TOKEN={your_bot_token}`
+BOT_TOKEN={your_bot_token}
 ```
 2. Run `npm run start`
