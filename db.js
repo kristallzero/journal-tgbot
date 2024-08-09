@@ -8,15 +8,29 @@ export default class {
         this.#dbPath = `data/${dbName}.json`;
         if (!fs.existsSync(this.#dbPath)) {
             if (!fs.existsSync('data')) fs.mkdirSync('data');
-            fs.writeFileSync(this.#dbPath, '[]');
-            this.#db = [];
+            this.#db = {
+                marks: [],
+                addingMark: false
+            };
+            await this.save();
         } else {
             this.#db = JSON.parse(fs.readFileSync(this.#dbPath));
         }
     }
 
-    async write(name) {
-        this.#db.push({ name, time: Date.now() });
+    createMark(name, time) {
+        this.#db.marks.push({ name, time });
+    }
+
+    changeAddingMark(state) {
+        this.#db.addingMark = state;
+    }
+
+    getAddingMark() {
+        return this.#db.addingMark;
+    }
+
+    async save() {
         fs.writeFileSync(this.#dbPath, JSON.stringify(this.#db));
     }
 }

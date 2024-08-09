@@ -12,13 +12,22 @@ bot.start(ctx => {
 });
 
 bot.command('new', async ctx => {
-    if (ctx.message.text.length === 4) return ctx.reply('Please, write activity name');
-    await db.write(ctx.message.text.slice(5).trimStart());
-    ctx.reply('Excellent! New activity mark has been created!');
+    if (ctx.message.text.length === 4) {
+        db.changeAddingMark(true);
+        ctx.reply('Good! Now write activity mark:');
+    } else {
+        db.createMark(ctx.message.text.slice(5).trimStart(), Date.now());
+        ctx.reply('Excellent! New activity mark has been created!');
+    }
+    await db.save();
 });
 
-bot.on(message('text'), ctx => {
-    ctx.reply('You can create activity mark using /new {activity name}');
+bot.on(message('text'), async ctx => {
+    if (!db.getAddingMark()) return ctx.reply('You can create activity mark using /new {activity name}');
+    db.changeAddingMark(false);
+    db.createMark(ctx.message.text, Date.now());
+    await db.save();
+    ctx.reply('Excellent! New activity mark has been created!');
 });
 
 await db.start('marks');
